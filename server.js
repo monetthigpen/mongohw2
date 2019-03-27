@@ -27,6 +27,7 @@ app.use(logger("dev"));
 // Parse request body as JSON
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+require('dotenv').config();
 // Make public a static folder
 
 
