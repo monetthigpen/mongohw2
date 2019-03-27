@@ -3,13 +3,16 @@ $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append("<h1 data[i].title </h1>" + data._id+ "<br> + <p>data[i].link</p> + <br> + <h4> data[i].summary</h4>");
+    $("#articles").append(
+      "<div class= ' card text-white bg-info mb-3'> <div class: 'card-header'> <h4>"+ data[i].title +"</h4></div><br><div class 'card-body'><p>" + data[i].link + "</p> <button type='button' class='btn btn-danger addnote'>Create Note</button><p class= 'comments'></p></div> </div>"
+      );
   }
 });
 $()
 
+
 // Whenever someone clicks a p tag
-$(document).on("click", "p", function() {
+$(document).on("click", ".addnote", function() {
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag
@@ -30,7 +33,7 @@ $(document).on("click", "p", function() {
       // A textarea to add a new note body
       $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      $("#notes").append("<button type='button' class:'btn btn-danger' data-id='" + data._id + "' id='savenote'>Save Note</button>");
 
       // If there's a note in the article
       if (data.note) {

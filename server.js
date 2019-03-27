@@ -28,17 +28,20 @@ app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 // Make public a static folder
-app.use(express.static("public"));
+
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/articlesdb";
+// Connect to the Mongo DB
+mongoose.connect(MONGODB_URI);
+//mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 
 // Routes
 app.get("/", function(req, res) {
   db.Article
-  .find({saved: false})
+  .find({})
   .then(function(dbArticle) {
-    res.render('index', { articles: dbArticle } );
+    res.render('index', { dbArticle } );
   })
   .catch(function(err) {
     // If an error occurred, send it to the client
