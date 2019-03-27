@@ -138,6 +138,17 @@ app.post("/articles/:id", function(req, res) {
       res.json(err);
     });
 });
+app.put("/notes/remove/:id", function(req, res) {
+  db.Note
+  .findOneAndRemove({ _id: req.params.id })
+  .then(function(dbNote) {
+    res.json(dbNote);
+  })
+  .catch(function(err) {
+    res.json(err);
+  });
+});
+
 
 // Start the server
 app.listen(PORT, function() {
