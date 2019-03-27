@@ -3,29 +3,29 @@ $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append(
-      "<div class= ' card text-white bg-info mb-3'> <div class: 'card-header'> <h4>"+ data[i].title +"</h4></div><br><div class 'card-body'><p>" + data[i].link + "</p> <button type='button' class='btn btn-danger addnote'>Create Note</button><p class= 'comments'></p></div> </div>"
-      );
+    $("#articles").append("<div class= ' card text-white bg-info mb-3'> <div class: 'card-header'> <h4>"+ data[i].title+"</h4></div><br><div class 'card-body'><p>" + data[i].link + "</p> <button type='button' class='btn btn-danger' data-id='" + data[i]._id + "'id= 'addnote'>Create Note</button><h3>Comments:</h3><hr><p id= 'comments'></p></div> </div>");
   }
 });
-$()
+
 
 
 // Whenever someone clicks a p tag
-$(document).on("click", ".addnote", function() {
+$(document).on("click", "button", function() {
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
+  // console.log(thisId)
 
   // Now make an ajax call for the Article
   $.ajax({
     method: "GET",
     url: "/articles/" + thisId
   })
+   
     // With that done, add the note information to the page
     .then(function(data) {
-      console.log(data);
+      // console.log(data);
       // The title of the article
       $("#notes").append("<h2>" + data.title + "</h2>");
       // An input to enter a new title
@@ -33,8 +33,9 @@ $(document).on("click", ".addnote", function() {
       // A textarea to add a new note body
       $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
       // A button to submit a new note, with the id of the article saved to it
-      $("#notes").append("<button type='button' class:'btn btn-danger' data-id='" + data._id + "' id='savenote'>Save Note</button>");
-
+      $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      console.log(data.note)
+      $("#comments").append("<hr><div><h5>"+data.note.title+"</h5></div>");
       // If there's a note in the article
       if (data.note) {
         // Place the title of the note in the title input
