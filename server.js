@@ -33,8 +33,12 @@ require('dotenv').config();
 
 // Connect to the Mongo DB
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/articlesdb";
+mongoose.Promise = Promise;
+mongoose.connect(MONGODB_URI, {
+  useMongoClient: true
+});
 // Connect to the Mongo DB
-mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
+// mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 //mongoose.connect("mongodb://localhost/unit18Populater", { useNewUrlParser: true });
 
 // Routes
