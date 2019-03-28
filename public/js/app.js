@@ -1,4 +1,7 @@
 // Grab the articles as a json
+$(document).on("click", "#scrapenew", function(){
+
+
 $.getJSON("/articles", function(data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
@@ -6,11 +9,11 @@ $.getJSON("/articles", function(data) {
     $("#articles").append("<div class= ' card text-white bg-info mb-3'> <div class: 'card-header'> <h4>"+ data[i].title+"</h4></div><br><div class 'card-body'><p>" + data[i].link + "</p> <button type='button' class='btn btn-danger' data-id='" + data[i]._id + "'id= 'addnote'>Create Comment</button><h3>Comments:</h3><hr><p data-id='" + data[i]._id + "' id= 'comments'></p></div> </div>");
   }
 });
-
+})
 
 
 // Whenever someone clicks a p tag
-$(document).on("click", "button", function() {
+$(document).on("click", "#addnote", function() {
   // Empty the notes from the note section
   $("#notes").empty();
   // Save the id from the p tag
@@ -79,7 +82,7 @@ $(document).on("click", "#savenote", function() {
 });
 $(document).on("click", "#deletenote", function(e){
   e.preventDefault();
-  var thisId = $(this).attr("note-id");
+  var thisId = $(this).attr("data-id");
   $.ajax({
     method: "PUT",
     url: "/notes/remove/" + thisId,
@@ -92,9 +95,9 @@ $(document).on("click", "#deletenote", function(e){
   }).then(function(data) {
     if(data){
       console.log(data);
-      $("#comments").empty();
+      
     }  
     
   });
-
+  $("#comments").empty();
 });
